@@ -19,18 +19,11 @@ class UsersTableSeeder extends Seeder
         $faker = \Faker\Factory::create();
         $password = Hash::make('password');
 
-        User::create([
+        $user = User::create([
         	'name' => 'Admin',
         	'email' => 'admin@blogingsystem.com',
         	'password' => $password,
         ]);
-
-        for ($i=0; $i<10; $i++) {
-        	User::create([
-        		'name' => $faker->name,
-        		'email' => $faker->email,
-        		'password' => $password,
-        	]);
-        }
+        $user->assignRole("admin");
     }
 }

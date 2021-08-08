@@ -20,6 +20,7 @@ class BlogsTableSeeder extends Seeder
         	Blog::create([
         		'title' => $faker->sentence,
         		'content' => $faker->paragraph,
+                'created_by' => 1
         	]);
         }
     }

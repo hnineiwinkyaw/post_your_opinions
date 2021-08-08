@@ -9,5 +9,9 @@ use Laravel\Passport\HasApiTokens;
 class Blog extends Model
 {
     use HasApiTokens, HasFactory;
-    protected $fillable = ['title','content'];
+    protected $fillable = [
+    	'title',
+    	'content',
+    	'created_by'
+    ];
 }
