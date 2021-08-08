@@ -24,13 +24,40 @@
                                     "properties": {
                                         "blogs": {
                                             "type": "array",
-                                            "items": {},
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "User Id",
+                                                        "type": "integer"
+                                                    },
+                                                    "title": {
+                                                        "description": "Blog Title",
+                                                        "type": "string"
+                                                    },
+                                                    "content": {
+                                                        "description": "Blog Content",
+                                                        "type": "string"
+                                                    },
+                                                    "created_by": {
+                                                        "description": "User Id of the blog created",
+                                                        "type": "integer"
+                                                    },
+                                                    "created_at": {
+                                                        "description": "Blog Creation timestamp",
+                                                        "type": "timestamps"
+                                                    },
+                                                    "updated_at": {
+                                                        "description": "Blog Updated timestamp",
+                                                        "type": "timestamps"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            },
                                             "collectionFormat": "multi"
                                         },
-                                        "data": {
-                                            "description": "The response data",
-                                            "type": "array",
-                                            "items": {}
+                                        "message": {
+                                            "description": "Message",
+                                            "type": "string"
                                         }
                                     },
                                     "type": "object"

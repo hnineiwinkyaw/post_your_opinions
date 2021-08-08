@@ -29,30 +29,42 @@ class BlogController extends Controller
      *                         type="array",
      *                         collectionFormat="multi",
      *                         @OA\Items(
-     *                              @OA\Schema(
      *                                  @OA\Property(
      *                                      property="id",
      *                                      type="integer",
      *                                      description="User Id"
      *                                  ),
      *                                  @OA\Property(
-     *                                      property="id",
-     *                                      type="integer",
-     *                                      description="User Id"
+     *                                      property="title",
+     *                                      type="string",
+     *                                      description="Blog Title"
      *                                  ),
      *                                  @OA\Property(
-     *                                      property="id",
+     *                                      property="content",
+     *                                      type="string",
+     *                                      description="Blog Content"
+     *                                  ),
+     *                                  @OA\Property(
+     *                                      property="created_by",
      *                                      type="integer",
-     *                                      description="User Id"
+     *                                      description="User Id of the blog created"
+     *                                  ),
+     *                                  @OA\Property(
+     *                                      property="created_at",
+     *                                      type="string",
+     *                                      description="Blog Creation timestamp"
+     *                                  ),
+     *                                  @OA\Property(
+     *                                      property="updated_at",
+     *                                      type="string",
+     *                                      description="Blog Updated timestamp"
      *                                  )
-     *                              )
      *                          )
      *                     ),
      *                     @OA\Property(
-     *                         property="data",
-     *                         type="array",
-     *                         description="The response data",
-     *                         @OA\Items
+     *                         property="message",
+     *                         type="string",
+     *                         description="Message"
      *                     )
      *                 )
      *             )
