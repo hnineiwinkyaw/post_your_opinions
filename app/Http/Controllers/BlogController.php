@@ -20,7 +20,7 @@ class BlogController extends Controller
         } else {
             $blogs = Blog::where('created_by', $user->id )->get();
         }
-        
+
         return response([ 
             'blogs' => BlogResource::collection($blogs),
             'message' => 'Successful'
@@ -28,7 +28,12 @@ class BlogController extends Controller
     }
 
     public function show(Blog $blog) {
-    	return $blog;
+
+        if( $this->isBlogCrudAllow($blog->created_by)) {
+            return $blog;
+        } else {
+            return response()->json($this->resourceForbiddenMessage(),403);
+        }
     }
 
     public function store(BlogCreateRequest $request) {
@@ -39,12 +44,31 @@ class BlogController extends Controller
     }
 
     public function update(Request $request, Blog $blog) {
-    	$blog->update($request->all());
-    	return response()->json($blog,200);
+
+        if( $this->isBlogCrudAllow($blog->created_by)) {
+            $blog->update($request->all());
+            return response()->json($blog,200);
+        } else {
+            return response()->json($this->resourceForbiddenMessage(),403);
+        }	
     }
 
     public function delete(Request $request, Blog $blog) {
-    	$blog -> delete();
-    	return response()->json(null, 204);
+
+        if( $this->isBlogCrudAllow($blog->created_by)) {
+            $blog -> delete();
+            return response()->json(null, 204);
+        } else {
+            return response()->json($this->resourceForbiddenMessage(),403);
+        }
+    }
+
+    private function isBlogCrudAllow($created_by) {
+        $user = Auth::user();
+        return $user->hasRole('admin') || $user->hasRole('manager') || $created_by == Auth::user()->id;
+    }
+
+    private function resourceForbiddenMessage() {
+        return ["error"=>"Resource Forbidden", "status"=> 403];
     }
 }
