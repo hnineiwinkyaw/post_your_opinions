@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AdminAuth
+class UserAuth
 {
     /**
      * Handle an incoming request.
@@ -17,7 +17,7 @@ class AdminAuth
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::guard('api')->check() && $request->user()->hasRole('admin')) {
+        if (Auth::guard('api')->check() && $request->user()->can('create-blog')) {
             return $next($request);
         } else {
             $message = ["message" => "Permission Denied"];

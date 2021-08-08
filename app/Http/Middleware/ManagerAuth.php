@@ -17,7 +17,7 @@ class ManagerAuth
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::guard('api')->check() && $request->user()->type >= 1) {
+        if (Auth::guard('api')->check() && $request->user()->hasRole('manager')) {
             return $next($request);
         } else {
             $message = ["message" => "Permission Denied"];

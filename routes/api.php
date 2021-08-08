@@ -15,12 +15,13 @@ use App\Http\Controllers\Auth\ApiAuthController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::middleware('auth:api')->group(function() {
+Route::group(['middleware' => ['cors','json.response']], function() {
+	Route::post('/login',[ApiAuthController::class, 'login'])->name('login.api');
 	Route::post('/logout',[ApiAuthController::class, 'logout'])->name('logout.api');
 });
 
-Route::middleware('auth:api')->group(function () {
+
+Route::group(['middleware' => ['cors','json.response','api.user']], function() {
 	Route::get('blogs',[BlogController::class, 'index']);
 	Route::get('blogs/{blog}',[BlogController::class, 'show']);
 	Route::post('blogs',[BlogController::class, 'store']);
@@ -28,11 +29,7 @@ Route::middleware('auth:api')->group(function () {
 	Route::delete('blogs/{blog}',[BlogController::class, 'delete']);
 });
 
-Route::group(['middleware' => ['cors','json.response']], function() {
-	Route::post('/login',[ApiAuthController::class, 'login'])->name('login.api');
+Route::group(['middleware' => ['cors','json.response','api.admin']], function() {
 	Route::post('/register',[ApiAuthController::class, 'register'])->name('register.api');
-	
 });
 
-
-// ->middleware('<middleware-name-here>')
