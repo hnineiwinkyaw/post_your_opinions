@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BlogController;
-use App\Http\Controllers\Auth\UserAuthController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\ApiAuthController;
 /*
 |--------------------------------------------------------------------------
@@ -24,12 +24,16 @@ Route::group(['middleware' => ['cors','json.response']], function() {
 Route::group(['middleware' => ['cors','json.response','api.user']], function() {
 	Route::get('blogs',[BlogController::class, 'index']);
 	Route::get('blogs/{blog}',[BlogController::class, 'show']);
-	Route::post('blogs',[BlogController::class, 'store']);
+	Route::post('blogs',[BlogController::class, 'create']);
 	Route::put('blogs/{blog}',[BlogController::class, 'update']);
-	Route::delete('blogs/{blog}',[BlogController::class, 'delete']);
+	Route::delete('blogs/{blog}',[BlogController::class, 'destroy']);
 });
 
 Route::group(['middleware' => ['cors','json.response','api.admin']], function() {
-	Route::post('/register',[ApiAuthController::class, 'register'])->name('register.api');
+	Route::get('users',[UserController::class, 'index']);
+	Route::get('users/{user}',[UserController::class, 'show']);
+	Route::post('users',[UserController::class, 'create']);
+	Route::put('users/{user}',[UserController::class, 'update']);
+	Route::delete('blogs/{blog}',[UserController::class, 'destroy']);
 });
 

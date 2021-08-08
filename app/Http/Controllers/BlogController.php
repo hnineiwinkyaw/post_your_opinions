@@ -11,6 +11,64 @@ use App\Http\Requests\BlogCreateRequest;
 
 class BlogController extends Controller
 {
+    /**
+     * @OA\Get(
+     *      path="/blogs",
+     *      operationId="get Blogs ",
+     *      summary="Get list of blogs",
+     *      description="Returns list of blogs",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="blogs",
+     *                         type="array",
+     *                         collectionFormat="multi",
+     *                         @OA\Items(
+     *                              @OA\Schema(
+     *                                  @OA\Property(
+     *                                      property="id",
+     *                                      type="integer",
+     *                                      description="User Id"
+     *                                  ),
+     *                                  @OA\Property(
+     *                                      property="id",
+     *                                      type="integer",
+     *                                      description="User Id"
+     *                                  ),
+     *                                  @OA\Property(
+     *                                      property="id",
+     *                                      type="integer",
+     *                                      description="User Id"
+     *                                  )
+     *                              )
+     *                          )
+     *                     ),
+     *                     @OA\Property(
+     *                         property="data",
+     *                         type="array",
+     *                         description="The response data",
+     *                         @OA\Items
+     *                     )
+     *                 )
+     *             )
+     *         }
+     *       ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     *     )
+     */
+
     public function index() {
 
         $user = Auth::user();
@@ -30,13 +88,13 @@ class BlogController extends Controller
     public function show(Blog $blog) {
 
         if( $this->isBlogCrudAllow($blog->created_by)) {
-            return $blog;
+            return response()->json($blog,200);
         } else {
             return response()->json($this->resourceForbiddenMessage(),403);
         }
     }
 
-    public function store(BlogCreateRequest $request) {
+    public function create(BlogCreateRequest $request) {
         $created_by = Auth::user()->id;
         $request["created_by"] = $created_by;
     	$blog = Blog::create($request->all());
@@ -53,7 +111,7 @@ class BlogController extends Controller
         }	
     }
 
-    public function delete(Request $request, Blog $blog) {
+    public function destroy(Request $request, Blog $blog) {
 
         if( $this->isBlogCrudAllow($blog->created_by)) {
             $blog -> delete();

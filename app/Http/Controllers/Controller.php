@@ -9,5 +9,10 @@ use Illuminate\Routing\Controller as BaseController;
 
 class Controller extends BaseController
 {
+	/**
+	* @OA\Info(
+	*     title="Post Your Opinion API",
+	*     version="1.0.0")
+	*/
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 }
