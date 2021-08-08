@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRegistrationRequest;
+use App\Http\Requests\LoginRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -26,8 +27,8 @@ class ApiAuthController extends Controller
         $validated_data = $request->validated();
        
        // validate role to make sure role exists.  
-        $assigned_role = Role::where('name', $validated_data['role'])->get();
-        if( count($assigned_role) < 1) {
+        $assigned_role = Role::where('name', $validated_data['role'])->first();
+        if( !$assigned_role ) {
             Log::error("Role does not exists");
             return response()->json([
                 'error' => 'Role does not exist.',
@@ -49,14 +50,11 @@ class ApiAuthController extends Controller
     	return response($response,200);
     }
 
-    public function login (Request $request) {
-    	$validator = Validator::make($request->all(), [
-    		'email'=> 'required|string|email|max:255',
-    		'password' => 'required|string|min:6',
-    	]);
-    	if ($validator->fails()) {
-    		return response(['errors'=>$validator->errors()->all()],400);
-    	}
+    public function login (LoginRequest $request) {
+    	
+        // validate data
+    	$validated_data = $request->validated();
+
     	$user = User::where('email',$request->email)->first();
     	if ($user) {
     		if(Hash::check($request->password, $user->password)) {
