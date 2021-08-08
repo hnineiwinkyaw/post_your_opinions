@@ -37,6 +37,13 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+
+        $this->renderable(function (\Spatie\Permission\Exceptions\RoleDoesNotExist $e, $request) {
+            return response()->json([
+                'error' => 'Role does not exist.',
+                'status'  => 400,
+            ]);
+        });
     }
 
     public function render($request, Throwable $exception) {

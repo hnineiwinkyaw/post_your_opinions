@@ -3,28 +3,47 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\UserRegistrationRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use App\Repositories\UserRepository;
+use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Log;
 
 class ApiAuthController extends Controller
 {
-    public function register (Request $request) {
-    	$validator = Validator::make($request->all(),[
-    		'name' => 'required|string|max:255',
-    		'email' => 'required|string|email|max:255|unique:users',
-    		'password' => 'required|string|min:6|confirmed',
-            'type' => 'integer',
-    	]);
-    	if ($validator->fails()) {
-    		return response(['errors'=>$validator->errors()->all()],400);
-    	}
-    	$request['password']=Hash::make($request['password']);
-    	$request['remember_token'] = Str::random(10);
-        $request['type'] = $request['type'] ? $request['type']  : 0;
-    	$user = User::create($request->toArray());
+    public $user;
+    public function __construct(UserRepository $user)
+    {
+        $this->user = $user;
+    }
+
+    public function register (UserRegistrationRequest $request) {
+
+        // validate data
+        $validated_data = $request->validated();
+       
+       // validate role to make sure role exists.  
+        $assigned_role = Role::where('name', $validated_data['role'])->get();
+        if( count($assigned_role) < 1) {
+            Log::error("Role does not exists");
+            return response()->json([
+                'error' => 'Role does not exist.',
+                'status'  => 400,
+            ]);
+        }
+        
+        // hash password
+        $validated_data['password']=Hash::make($validated_data['password']);
+        $validated_data['remember_token'] = Str::random(10);
+
+        // store data
+        $user = $this->user->store($validated_data);
+        $user->assignRole($validated_data['role']);
+
+        // create token for response
     	$token = $user->createToken('Secret')->accessToken;
     	$response = ['token'=>$token];
     	return response($response,200);
