@@ -15,7 +15,7 @@ use App\Http\Controllers\Auth\ApiAuthController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::group(['middleware' => ['cors']], function() {
+Route::group(['middleware' => ['cors','json.response']], function() {
 	Route::post('/login',[ApiAuthController::class, 'login'])->name('login.api');
 	Route::post('/logout',[ApiAuthController::class, 'logout'])->name('logout.api');
 });
