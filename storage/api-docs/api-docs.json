@@ -6,12 +6,15 @@
     },
     "servers": [
         {
-            "url": "http://localhost:8000/"
+            "url": "http://localhost:8000/api/"
         }
     ],
     "paths": {
         "/blogs": {
             "get": {
+                "tags": [
+                    "Blogs"
+                ],
                 "summary": "Get list of blogs",
                 "description": "Returns list of blogs",
                 "operationId": "get Blogs ",
@@ -44,11 +47,11 @@
                                                     },
                                                     "created_at": {
                                                         "description": "Blog Creation timestamp",
-                                                        "type": "timestamps"
+                                                        "type": "string"
                                                     },
                                                     "updated_at": {
                                                         "description": "Blog Updated timestamp",
-                                                        "type": "timestamps"
+                                                        "type": "string"
                                                     }
                                                 },
                                                 "type": "object"
@@ -71,11 +74,694 @@
                     "403": {
                         "description": "Forbidden"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Blogs"
+                ],
+                "summary": "Create new blog",
+                "description": "Create new blog",
+                "operationId": "create blog",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "title": {
+                                        "description": "Blog Title",
+                                        "type": "string"
+                                    },
+                                    "content": {
+                                        "description": "Blog Content",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "description": "User Id",
+                                            "type": "integer"
+                                        },
+                                        "title": {
+                                            "description": "Blog Title",
+                                            "type": "string"
+                                        },
+                                        "content": {
+                                            "description": "Blog Content",
+                                            "type": "string"
+                                        },
+                                        "created_by": {
+                                            "description": "User Id of the blog created",
+                                            "type": "integer"
+                                        },
+                                        "created_at": {
+                                            "description": "Blog Creation timestamp",
+                                            "type": "string"
+                                        },
+                                        "updated_at": {
+                                            "description": "Blog Updated timestamp",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/blogs/{id}": {
+            "get": {
+                "tags": [
+                    "Blogs"
+                ],
+                "summary": "Get detail of blog object",
+                "description": "Returns blog detail object",
+                "operationId": "get Blog Details ",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "blog id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "description": "User Id",
+                                            "type": "integer"
+                                        },
+                                        "title": {
+                                            "description": "Blog Title",
+                                            "type": "string"
+                                        },
+                                        "content": {
+                                            "description": "Blog Content",
+                                            "type": "string"
+                                        },
+                                        "created_by": {
+                                            "description": "User Id of the blog created",
+                                            "type": "integer"
+                                        },
+                                        "created_at": {
+                                            "description": "Blog Creation timestamp",
+                                            "type": "string"
+                                        },
+                                        "updated_at": {
+                                            "description": "Blog Updated timestamp",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Blogs"
+                ],
+                "summary": "update blog object",
+                "description": "Update blog detail object",
+                "operationId": "update Blog Details ",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "blog id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "description": "User Id",
+                                            "type": "integer"
+                                        },
+                                        "title": {
+                                            "description": "Blog Title",
+                                            "type": "string"
+                                        },
+                                        "content": {
+                                            "description": "Blog Content",
+                                            "type": "string"
+                                        },
+                                        "created_by": {
+                                            "description": "User Id of the blog created",
+                                            "type": "integer"
+                                        },
+                                        "created_at": {
+                                            "description": "Blog Creation timestamp",
+                                            "type": "string"
+                                        },
+                                        "updated_at": {
+                                            "description": "Blog Updated timestamp",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Blogs"
+                ],
+                "summary": "Delete blog by id",
+                "description": "Delete blog by id",
+                "operationId": "Delete Blog ",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "blog id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "description": "User Id",
+                                            "type": "integer"
+                                        },
+                                        "title": {
+                                            "description": "Blog Title",
+                                            "type": "string"
+                                        },
+                                        "content": {
+                                            "description": "Blog Content",
+                                            "type": "string"
+                                        },
+                                        "created_by": {
+                                            "description": "User Id of the blog created",
+                                            "type": "integer"
+                                        },
+                                        "created_at": {
+                                            "description": "Blog Creation timestamp",
+                                            "type": "string"
+                                        },
+                                        "updated_at": {
+                                            "description": "Blog Updated timestamp",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/users": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get list of users",
+                "description": "Returns list of users",
+                "operationId": "get all users ",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "users": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "user id",
+                                                        "type": "integer"
+                                                    },
+                                                    "name": {
+                                                        "description": "user name",
+                                                        "type": "string"
+                                                    },
+                                                    "email": {
+                                                        "description": "user email",
+                                                        "type": "string"
+                                                    },
+                                                    "email_verified_at": {
+                                                        "description": "user email verified timestamp",
+                                                        "type": "string"
+                                                    },
+                                                    "created_at": {
+                                                        "description": "user creation timestamp",
+                                                        "type": "string"
+                                                    },
+                                                    "updated_at": {
+                                                        "description": "user updated timestamp",
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            },
+                                            "collectionFormat": "multi"
+                                        },
+                                        "message": {
+                                            "description": "Message",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Create new user",
+                "description": "Create new user",
+                "operationId": "create user",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "user name",
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "description": "user email",
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "description": "user password",
+                                        "type": "string"
+                                    },
+                                    "password_confirmation": {
+                                        "description": "user password confirmation",
+                                        "type": "string"
+                                    },
+                                    "role": {
+                                        "description": "user role",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "description": "user id",
+                                            "type": "integer"
+                                        },
+                                        "name": {
+                                            "description": "user name",
+                                            "type": "string"
+                                        },
+                                        "email": {
+                                            "description": "user email",
+                                            "type": "string"
+                                        },
+                                        "email_verified_at": {
+                                            "description": "user email verified timestamp",
+                                            "type": "string"
+                                        },
+                                        "created_at": {
+                                            "description": "user creation timestamp",
+                                            "type": "string"
+                                        },
+                                        "updated_at": {
+                                            "description": "user updated timestamp",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/users/{id}": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get detail of user object",
+                "description": "Returns user detail object",
+                "operationId": "get user details ",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "user id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "description": "user id",
+                                            "type": "integer"
+                                        },
+                                        "name": {
+                                            "description": "user name",
+                                            "type": "string"
+                                        },
+                                        "email": {
+                                            "description": "user email",
+                                            "type": "string"
+                                        },
+                                        "email_verified_at": {
+                                            "description": "user email verified timestamp",
+                                            "type": "string"
+                                        },
+                                        "created_at": {
+                                            "description": "user creation timestamp",
+                                            "type": "string"
+                                        },
+                                        "updated_at": {
+                                            "description": "user updated timestamp",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Update detail of user object",
+                "description": "Update user detail object",
+                "operationId": "Update user details ",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "user name",
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "description": "user email",
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "description": "user password",
+                                        "type": "string"
+                                    },
+                                    "role": {
+                                        "description": "user role",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "description": "user id",
+                                            "type": "integer"
+                                        },
+                                        "name": {
+                                            "description": "user name",
+                                            "type": "string"
+                                        },
+                                        "email": {
+                                            "description": "user email",
+                                            "type": "string"
+                                        },
+                                        "email_verified_at": {
+                                            "description": "user email verified timestamp",
+                                            "type": "string"
+                                        },
+                                        "created_at": {
+                                            "description": "user creation timestamp",
+                                            "type": "string"
+                                        },
+                                        "updated_at": {
+                                            "description": "user updated timestamp",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Delete user object",
+                "description": "Delete user object",
+                "operationId": "Delete user object ",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "user id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "description": "user id",
+                                            "type": "integer"
+                                        },
+                                        "name": {
+                                            "description": "user name",
+                                            "type": "string"
+                                        },
+                                        "email": {
+                                            "description": "user email",
+                                            "type": "string"
+                                        },
+                                        "email_verified_at": {
+                                            "description": "user email verified timestamp",
+                                            "type": "string"
+                                        },
+                                        "created_at": {
+                                            "description": "user creation timestamp",
+                                            "type": "string"
+                                        },
+                                        "updated_at": {
+                                            "description": "user updated timestamp",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             }
         }
     },
-    "security": [
-        []
-    ]
+    "components": {
+        "securitySchemes": {
+            "bearer": {
+                "type": "http",
+                "description": "Authorization token obtained from logging in.",
+                "name": "Authorization",
+                "in": "header",
+                "scheme": "bearer"
+            }
+        }
+    }
 }

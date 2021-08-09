@@ -21,9 +21,75 @@ class UserController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @OA\Get(
+     *      path="/users",
+     *      tags={"Users"},
+     *      operationId="get all users ",
+     *      summary="Get list of users",
+     *      security={ {"bearer": {} }},
+     *      description="Returns list of users",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="users",
+     *                         type="array",
+     *                         collectionFormat="multi",
+     *                         @OA\Items(
+     *                                  @OA\Property(
+     *                                      property="id",
+     *                                      type="integer",
+     *                                      description="user id"
+     *                                  ),
+     *                                  @OA\Property(
+     *                                      property="name",
+     *                                      type="string",
+     *                                      description="user name"
+     *                                  ),
+     *                                  @OA\Property(
+     *                                      property="email",
+     *                                      type="string",
+     *                                      description="user email"
+     *                                  ),
+     *                                  @OA\Property(
+     *                                      property="email_verified_at",
+     *                                      type="string",
+     *                                      description="user email verified timestamp"
+     *                                  ),
+     *                                  @OA\Property(
+     *                                      property="created_at",
+     *                                      type="string",
+     *                                      description="user creation timestamp"
+     *                                  ),
+     *                                  @OA\Property(
+     *                                      property="updated_at",
+     *                                      type="string",
+     *                                      description="user updated timestamp"
+     *                                  )
+     *                          )
+     *                     ),
+     *                     @OA\Property(
+     *                         property="message",
+     *                         type="string",
+     *                         description="Message"
+     *                     )
+     *                 )
+     *             )
+     *         }
+     *       ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     *     )
      */
     public function index()
     {
@@ -35,10 +101,100 @@ class UserController extends Controller
         ], 200);
     }
 
+
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @OA\Post(
+     *      path="/users",
+     *      operationId="create user",
+     *      tags={"Users"},
+     *      security={ {"bearer": {} }},
+     *      summary="Create new user",
+     *      description="Create new user",
+     *      @OA\RequestBody(
+     *          required=true,
+     *          content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                                  @OA\Property(
+     *                                      property="name",
+     *                                      type="string",
+     *                                      description="user name"
+     *                                  ),
+     *                                  @OA\Property(
+     *                                      property="email",
+     *                                      type="string",
+     *                                      description="user email"
+     *                                  ),
+     *                                  @OA\Property(
+     *                                      property="password",
+     *                                      type="string",
+     *                                      description="user password"
+     *                                  ),
+     *                                  @OA\Property(
+     *                                      property="password_confirmation",
+     *                                      type="string",
+     *                                      description="user password confirmation"
+     *                                  ),
+     *                                  @OA\Property(
+     *                                      property="role",
+     *                                      type="string",
+     *                                      description="user role"
+     *                                  )
+     *                 )
+     *             )
+     *         }
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                                @OA\Property(
+     *                                      property="id",
+     *                                      type="integer",
+     *                                      description="user id"
+     *                                  ),
+     *                                  @OA\Property(
+     *                                      property="name",
+     *                                      type="string",
+     *                                      description="user name"
+     *                                  ),
+     *                                  @OA\Property(
+     *                                      property="email",
+     *                                      type="string",
+     *                                      description="user email"
+     *                                  ),
+     *                                  @OA\Property(
+     *                                      property="email_verified_at",
+     *                                      type="string",
+     *                                      description="user email verified timestamp"
+     *                                  ),
+     *                                  @OA\Property(
+     *                                      property="created_at",
+     *                                      type="string",
+     *                                      description="user creation timestamp"
+     *                                  ),
+     *                                  @OA\Property(
+     *                                      property="updated_at",
+     *                                      type="string",
+     *                                      description="user updated timestamp"
+     *                                  )
+     *                 )
+     *             )
+     *         }
+     *       ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     *     )
      */
     public function create(UserRegistrationRequest $request)
     {
@@ -70,10 +226,72 @@ class UserController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @OA\Get(
+     *      path="/users/{id}",
+     *      operationId="get user details ",
+     *      tags={"Users"},
+     *      summary="Get detail of user object",
+     *      security={ {"bearer": {} }},
+     *      description="Returns user detail object",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="user id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                                @OA\Property(
+     *                                      property="id",
+     *                                      type="integer",
+     *                                      description="user id"
+     *                                  ),
+     *                                  @OA\Property(
+     *                                      property="name",
+     *                                      type="string",
+     *                                      description="user name"
+     *                                  ),
+     *                                  @OA\Property(
+     *                                      property="email",
+     *                                      type="string",
+     *                                      description="user email"
+     *                                  ),
+     *                                  @OA\Property(
+     *                                      property="email_verified_at",
+     *                                      type="string",
+     *                                      description="user email verified timestamp"
+     *                                  ),
+     *                                  @OA\Property(
+     *                                      property="created_at",
+     *                                      type="string",
+     *                                      description="user creation timestamp"
+     *                                  ),
+     *                                  @OA\Property(
+     *                                      property="updated_at",
+     *                                      type="string",
+     *                                      description="user updated timestamp"
+     *                                  )
+     *                 )
+     *             )
+     *         }
+     *       ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     *     )
      */
     public function show(User $user)
     {
@@ -81,11 +299,93 @@ class UserController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @OA\Put(
+     *      path="/users/{id}",
+     *      operationId="Update user details ",
+     *      tags={"Users"},
+     *      summary="Update detail of user object",
+     *      security={ {"bearer": {} }},
+     *      description="Update user detail object",
+     *      @OA\RequestBody(
+     *          required=true,
+     *          content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                                  @OA\Property(
+     *                                      property="name",
+     *                                      type="string",
+     *                                      description="user name"
+     *                                  ),
+     *                                  @OA\Property(
+     *                                      property="email",
+     *                                      type="string",
+     *                                      description="user email"
+     *                                  ),
+     *                                  @OA\Property(
+     *                                      property="password",
+     *                                      type="string",
+     *                                      description="user password"
+     *                                  ),
+     *                                  @OA\Property(
+     *                                      property="role",
+     *                                      type="string",
+     *                                      description="user role"
+     *                                  )
+     *                 )
+     *             )
+     *         }
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                                @OA\Property(
+     *                                      property="id",
+     *                                      type="integer",
+     *                                      description="user id"
+     *                                  ),
+     *                                  @OA\Property(
+     *                                      property="name",
+     *                                      type="string",
+     *                                      description="user name"
+     *                                  ),
+     *                                  @OA\Property(
+     *                                      property="email",
+     *                                      type="string",
+     *                                      description="user email"
+     *                                  ),
+     *                                  @OA\Property(
+     *                                      property="email_verified_at",
+     *                                      type="string",
+     *                                      description="user email verified timestamp"
+     *                                  ),
+     *                                  @OA\Property(
+     *                                      property="created_at",
+     *                                      type="string",
+     *                                      description="user creation timestamp"
+     *                                  ),
+     *                                  @OA\Property(
+     *                                      property="updated_at",
+     *                                      type="string",
+     *                                      description="user updated timestamp"
+     *                                  )
+     *                 )
+     *             )
+     *         }
+     *       ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     *     )
      */
     public function update(Request $request,User $user)
     {
@@ -94,10 +394,72 @@ class UserController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @OA\Delete(
+     *      path="/users/{id}",
+     *      operationId="Delete user object ",
+     *      tags={"Users"},
+     *      summary="Delete user object",
+     *      security={ {"bearer": {} }},
+     *      description="Delete user object",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="user id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                                @OA\Property(
+     *                                      property="id",
+     *                                      type="integer",
+     *                                      description="user id"
+     *                                  ),
+     *                                  @OA\Property(
+     *                                      property="name",
+     *                                      type="string",
+     *                                      description="user name"
+     *                                  ),
+     *                                  @OA\Property(
+     *                                      property="email",
+     *                                      type="string",
+     *                                      description="user email"
+     *                                  ),
+     *                                  @OA\Property(
+     *                                      property="email_verified_at",
+     *                                      type="string",
+     *                                      description="user email verified timestamp"
+     *                                  ),
+     *                                  @OA\Property(
+     *                                      property="created_at",
+     *                                      type="string",
+     *                                      description="user creation timestamp"
+     *                                  ),
+     *                                  @OA\Property(
+     *                                      property="updated_at",
+     *                                      type="string",
+     *                                      description="user updated timestamp"
+     *                                  )
+     *                 )
+     *             )
+     *         }
+     *       ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     *     )
      */
     public function destroy(User $user)
     {
