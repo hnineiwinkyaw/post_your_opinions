@@ -14,4 +14,9 @@ class Blog extends Model
     	'content',
     	'created_by'
     ];
+
+    public function user()
+	{
+	  return $this->belongsTo(User::class, 'created_by');
+	}
 }

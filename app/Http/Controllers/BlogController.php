@@ -90,7 +90,7 @@ class BlogController extends Controller
         if( $user->hasRole('admin') || $user->hasRole('manager')) {
             $blogs = Blog::all();
         } else {
-            $blogs = Blog::where('created_by', $user->id )->get();
+        $blogs = $user->blogs; // get user's blogs using relations.
         }
 
         return response([ 

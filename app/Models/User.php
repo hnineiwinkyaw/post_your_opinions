@@ -47,4 +47,9 @@ class User extends Authenticatable
     {
         $this->notify(new \App\Notifications\MailResetPasswordNotification($token));
     }
+
+    public function blogs()
+    {
+       return $this->hasMany(Blog::class, 'created_by');
+    }
 }
